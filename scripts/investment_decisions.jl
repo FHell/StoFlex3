@@ -5,6 +5,9 @@ df_file = "preloaded/df_raw.serial"
 
 include(joinpath(@__DIR__, "load_data_preamble.jl"))
 
+using CairoMakie
+using LaTeXStrings
+
 ##
 
 
@@ -86,23 +89,25 @@ select!(df_bp, [:name, :F, :flex_interval, invs..., r_invs...])
 
 ##
 
+L_names = [L"$I_B$", L"$I_F$ (small)", L"$I_S$ (small)", L"$I_S$ (rare)", L"$I_F$ (large)", L"$I_S$ (large)"]
+
 function cat_exp(r)
     s = ""
     if (r.name == "background")
-        return "No Flex Modelling"
+        return L"$I_B$" # "No Flex Modelling"
     elseif (r.name == "capacity_only")
         if r.F == 250
-            return "Capacity Constraint\n (250kW)"
+            return L"$I_F$ (small)" # "Capacity Constraint\n (250kW)"
         elseif r.F == 5000
-            return "Capacity Constraint\n (5000kW)"
+            return L"$I_F$ (large)" # "Capacity Constraint\n (5000kW)"
         end
     elseif (r.name == "OFIOR")
         if r.F == 250
-            return "Full model\n (250kW)"
+            return L"$I_S$ (small)" # "Full model\n (250kW)"
         elseif r.F == 5000 && r.flex_interval == 6
-            return "Full model\n (5000kW)"
+            return L"$I_S$ (large)" # "Full model\n (5000kW)"
         elseif r.F == 5000 && r.flex_interval == 24
-            return "Full model\n (5000kW, infrequent)"
+            return L"$I_S$ (rare)" # "Full model\n (5000kW, infrequent)"
         end
     end
 end
@@ -169,10 +174,8 @@ fig = Figure(;
     figure_padding = (5, 5, 10, 10),
     size = (1000, 600),)
 
-exp_names = [L"$I_B$", L"$I_F$ (small)", L"$I_S$ (small)", L"$I_S$ (rare)", L"$I_F$ (large)", L"$I_S$ (large)"]
-
 ax = Axis(fig[1, 1];
-    xticks = (df_bp.exp, exp_names),
+    xticks = (df_bp.exp, df_bp.exp_names),
     ylabel = "Relative Investment",
     xticklabelrotation = -π / 2)
 
