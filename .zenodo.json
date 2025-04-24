@@ -1,0 +1,25 @@
+{
+  "upload_type": "software",
+
+  "title": "Software to generate the results of the paper - Meeting uncertain demands for short term  flexibility.",
+
+  "creators": [
+    {
+      "name": "Hellmann, Frank",
+      "affiliation": "PIK",
+    },
+    {
+      "name": "Lindner, Michael",
+      "affiliation": "TU Berlin",
+    }
+  ],
+
+  "description": "Software to generate the results of the paper - Meeting uncertain demands for short term  flexibility.",
+
+  "access_right": "open",
+  
+  "license": "MIT",
+
+  "keywords": ["Potsdam Institute for Climate Impact Research", "PIK", "Software", "PaperCompanion", "as-is"],
+ 
+}
