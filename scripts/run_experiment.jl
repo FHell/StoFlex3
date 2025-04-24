@@ -39,11 +39,11 @@ if length(ARGS) == 0 # running locally
     F = F_array[5]
     flex_interval = flex_interval_array[3]
     n_samples = n_samples_array[1]
-    data_es = load_max_boegl(time_steps = 1:1000)
+    data_es = load_industry_park1(time_steps = 1:1000)
     F = 500
     flex_interval = 6
     n_samples = 10
-    data_es = load_max_boegl()
+    data_es = load_industry_park1()
 end
 
 if length(ARGS) >= 3 # running on cluster
@@ -55,7 +55,7 @@ if length(ARGS) >= 3 # running on cluster
     F = F_array[_ARGS[1]]
     flex_interval = flex_interval_array[_ARGS[2]]
     n_samples = n_samples_array[_ARGS[3]]
-    data_es = load_max_boegl()
+    data_es = load_industry_park1()
 end
 
 flex_pars = (F = F, flex_interval = flex_interval, n_samples = n_samples)

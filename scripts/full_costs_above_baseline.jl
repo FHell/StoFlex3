@@ -138,10 +138,7 @@ function cost_above_baseline_fig(dfs_cab, dfs_MWph)
         ylabel="Final Heat Mismatch (kWh)",
     )
 
-    tp = 0.0
-
     for df_m in dfs_MWph
-        tp += sum(df_m.energy_not_served)
         scatterlines!(ax4,
             df_m.F,
             sum_inm.(df_m.hfp),
@@ -154,12 +151,8 @@ function cost_above_baseline_fig(dfs_cab, dfs_MWph)
             label="$(m_names[df_m.name[1]])")
     end
 
-
     # If there is no penalty in the system, the automatic y limits are not nice,
     # Set them manually here:
-    if tp < 1
-        ylims!(ax4, -1.0, 1.0)
-    end
 
     Legend(fig[:, 2], ax1)
     fig
@@ -170,7 +163,7 @@ end
 
 for suffix in ["", "_ini"]
     for flex_interval in flex_interval_array
-        for n_samples in [6]
+        for n_samples in [6, 12]
             local df_OFIOR = filter_kwd(df; flex_interval, name="OFIOR" * suffix, n_samples)
 
             local df_OFOR = filter_kwd(df; flex_interval, name="OFOR" * suffix, n_samples)
@@ -200,7 +193,7 @@ end
 
 ##
 
-n_samples = 6
+n_samples = 12
 suffix = ""
 flex_interval = 6
 
@@ -279,3 +272,31 @@ fig = cost_above_baseline_publication([df_OFIOR, df_OFOR, df_OFR, df_SB, df_CapO
 mkpath(joinpath(figure_dir, "publication"))
 
 save(joinpath(figure_dir, "publication", "cost_above_baseline.png"), fig)
+
+##
+
+
+n_samples = 12
+suffix = "_ini"
+flex_interval = 6
+
+df_OFIOR = filter_kwd(df; flex_interval, name="OFIOR" * suffix, n_samples)
+
+df_OFOR = filter_kwd(df; flex_interval, name="OFOR" * suffix, n_samples)
+
+df_OFR = filter_kwd(df; flex_interval, name="OFR" * suffix, n_samples)
+
+# experiment == "defaults" && (df_OFR.cab_pkWh[3] = missing) # There is a non-zero penalty here.
+
+df_CapOnly = filter_kwd(df; name="capacity_only")
+
+df_SB = filter_kwd(df;
+    name="stochastic_background",
+    optimized=true,
+    flex_interval,
+    n_samples)
+
+fig = cost_above_baseline_publication([df_OFIOR, df_OFOR, df_OFR, df_SB, df_CapOnly],
+[df_OFIOR, df_OFOR, df_OFR, df_SB])
+
+save(joinpath(figure_dir, "publication", "cost_above_baseline_no_resample.png"), fig)

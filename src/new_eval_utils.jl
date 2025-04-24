@@ -32,6 +32,14 @@ function load_results(simpath)
     return df
 end
 
+function load_model(df, model_idx; optimizer=Gurobi.Optimizer)
+    recovery_time = df.recovery_time[model_idx]
+    sp = deserialize(joinpath(df.path[model_idx], "$(df.name[model_idx])_optimal.serial"))
+    scens = (t_xi = df.t_xi[model_idx], s_xi = df.s_xi[model_idx], F_xi = df.F_xi[model_idx])
+    set_optimizer(sp, optimizer)
+    return sp, scens, recovery_time
+end
+
 function get_CB(df)
     b = subset(df,
         :name => name -> name .== "background")

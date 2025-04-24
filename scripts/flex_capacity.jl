@@ -6,7 +6,7 @@ df_file = "preloaded/df_raw.serial"
 include(joinpath(@__DIR__, "load_data_preamble.jl"))
 
 include("../src/load_energy_system_data.jl")
-data_es = load_max_boegl()
+data_es = load_industry_park1()
 
 ##
 
@@ -99,7 +99,7 @@ end
 
 ##
 
-df_plt = filter_kwd(df; n_samples = 6, flex_interval = 6, F = 5000, name = "OFIOR")
+df_plt = filter_kwd(df; n_samples = 12, flex_interval = 6, F = 5000, name = "OFIOR")
 
 calculate_flex_capacity!(df_plt, data_es)
 

@@ -24,7 +24,7 @@ df = filter_kwd(df; first_dir = experiment)
 
 CB = get_CB(df)
 
-df.cost_above_baseline = df.full_cost .- CB .- df.penalty_cost
+df.cost_above_baseline = df.no_penalty_cost .- CB
 df.cab_pkWh = df.cost_above_baseline ./ df.expected_flex_energy_per_full_period
 df.cab_pMWh = df.cost_above_baseline ./ df.expected_flex_energy_per_full_period .* 1e3
 
@@ -47,10 +47,6 @@ sort!(df, :F)
 
 ##
 
-df.pathological = (df.gci .|> maximum) .> 5e6
-count(df.pathological)
-
-##
 
 function values_figures(dfs_cab, dfs_MWph)
     tick_strings = string.(F_array)
@@ -96,7 +92,7 @@ end
 update_theme!(fontsize = 20)
 
 for flex_interval in flex_interval_array
-    n_samples = 6
+    n_samples = 12
 
     local df_OFIOR = filter_kwd(df; flex_interval, name = "OFIOR", n_samples)
 
@@ -134,7 +130,7 @@ end
 
 ##
 flex_interval = 6
-n_samples = 6
+n_samples = 12
 
 df_OFIOR = filter_kwd(df; flex_interval, name = "OFIOR", n_samples)
 

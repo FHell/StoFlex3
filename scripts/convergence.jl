@@ -114,7 +114,7 @@ fig = Figure(;
     size = (1200, 1600),)
 
 ax1 = Axis(fig[1, 1];
-    limits = (nothing, (0.98, 1.02)),
+    limits = (nothing, (0.9, 1.1)),
     xlabelvisible = false,
     xticksvisible = false,
     xticklabelsvisible = false,
@@ -131,7 +131,7 @@ for (u, u_name, u_color) in zip(us, u_names, u_colors)
 end
 
 ax2 = Axis(fig[2, 1];
-    limits = (nothing, (0.98, 1.02)),
+    limits = (nothing, (0.9, 1.1)),
     xlabelvisible = false,
     xticksvisible = false,
     xticklabelsvisible = false,
@@ -148,7 +148,7 @@ for (u, u_name, u_color) in zip(us, u_names, u_colors)
 end
 
 ax3 = Axis(fig[3, 1];
-    limits = (nothing, (0.9, 1.2)),
+    limits = (nothing, (0.9, 1.1)),
     xlabel = "Number of Samples",
     xticks = df_pl.n_samples,
     title = "Frequent large requests (5000kW, four per day)")

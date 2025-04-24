@@ -25,7 +25,7 @@ df = filter_kwd(df; first_dir = experiment)
 
 CB = get_CB(df)
 
-df.cost_above_baseline = df.full_cost .- CB .- df.penalty_cost
+df.cost_above_baseline = df.no_penalty_cost .- CB
 df.cab_pkWh = df.cost_above_baseline ./ df.expected_flex_energy_per_full_period
 df.cab_pMWh = df.cost_above_baseline ./ df.expected_flex_energy_per_full_period .* 1e3
 
@@ -41,9 +41,9 @@ mkpath(figure_dir)
 
 ##
 
-df_rF = filter_kwd(df, n_samples = 6, name = "OFIOR")
+df_rF = filter_kwd(df, n_samples = 12, name = "OFIOR")
 
-hm_vars = [:cab_pMWh :operation_cost :total_investment_cost;
+hm_vars = [:cab_pMWh :operation_cost :investment_cost;
     :u_storage :u_heat_storage :u_heatpump]
 hm_factor = [1.0 1e-6 1e-6; 1e-4 1e-4 1e-4]
 hm_labels = ["Cost above Baseline (€ per MWh)" "Operation Cost (M€)" "Total investment (M€)";

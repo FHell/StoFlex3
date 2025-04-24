@@ -53,7 +53,7 @@ if !@isdefined default_es_pars
         :max_wind => 10^3))
 end
 
-function load_max_boegl(;
+function load_industry_park1(;
     basepath=joinpath(@__DIR__, ".."),
     time_steps=nothing,
     offset=0,

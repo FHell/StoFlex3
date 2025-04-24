@@ -80,7 +80,7 @@ function bar_plot_selector(r; cases, n_samples)
     end
 end
 
-df_bp = filter(r -> bar_plot_selector(r; n_samples = 6, cases), df)
+df_bp = filter(r -> bar_plot_selector(r; n_samples = 12, cases), df)
 
 select!(df_bp, [:name, :F, :flex_interval, invs..., r_invs...])
 
